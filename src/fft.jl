@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Calculate the fast Fourier transform of n numbers in x̄.
 (Note that n must be a power of 2 (n = 2ᵏ))

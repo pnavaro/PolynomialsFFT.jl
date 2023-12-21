@@ -1,0 +1,6 @@
+name = "FFTPolynomialProduct"
+uuid = "ea2507fa-e483-4fb4-8936-3e802d2aaf4a"
+authors = ["Pierre Navaro <pierre.navaro@math.cnrs.fr>"]
+version = "0.1.0"
+
+[deps]
