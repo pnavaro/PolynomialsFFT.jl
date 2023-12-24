@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Fourier Transform for Polynomial product · PolynomialsFFT</title><meta name="title" content="Fourier Transform for Polynomial product · PolynomialsFFT"/><meta property="og:title" content="Fourier Transform for Polynomial product · PolynomialsFFT"/><meta property="twitter:title" content="Fourier Transform for Polynomial product · PolynomialsFFT"/><meta name="description" content="Documentation for PolynomialsFFT."/><meta property="og:description" content="Documentation for PolynomialsFFT."/><meta property="twitter:description" content="Documentation for PolynomialsFFT."/><script data-outdated-warner src="assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="assets/documenter.js"></script><script src="search_index.js"></script><script src="siteinfo.js"></script><script src="../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href>PolynomialsFFT</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li class="is-active"><a class="tocitem" href>Fourier Transform for Polynomial product</a><ul class="internal"><li><a class="tocitem" href="#Polynomials"><span>Polynomials</span></a></li><li><a class="tocitem" href="#Representation"><span>Representation</span></a></li><li><a class="tocitem" href="#Discrete-Fourier-Transform"><span>Discrete Fourier Transform</span></a></li><li><a class="tocitem" href="#Definitions"><span>Definitions</span></a></li><li><a class="tocitem" href="#N{th}-Roots-of-Unity"><span><span>$N^{th}$</span> Roots of Unity</span></a></li><li><a class="tocitem" href="#Fast-Fourier-Transform"><span>Fast Fourier Transform</span></a></li><li><a class="tocitem" href="#Time-Complexity"><span>Time Complexity</span></a></li><li><a class="tocitem" href="#Example"><span>Example</span></a></li></ul></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Fourier Transform for Polynomial product</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Fourier Transform for Polynomial product</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/pnavaro/JuliaFFT" title="View the repository on GitHub"><span class="docs-icon fa-brands"></span><span class="docs-label is-hidden-touch">GitHub</span></a><a class="docs-navbar-link" href="https://github.com/pnavaro/JuliaFFT/blob/master/docs/src/index.md" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Fourier-Transform-for-Polynomial-product"><a class="docs-heading-anchor" href="#Fourier-Transform-for-Polynomial-product">Fourier Transform for Polynomial product</a><a id="Fourier-Transform-for-Polynomial-product-1"></a><a class="docs-heading-anchor-permalink" href="#Fourier-Transform-for-Polynomial-product" title="Permalink"></a></h1><h2 id="Polynomials"><a class="docs-heading-anchor" href="#Polynomials">Polynomials</a><a id="Polynomials-1"></a><a class="docs-heading-anchor-permalink" href="#Polynomials" title="Permalink"></a></h2><ul><li>How to multiply two polynomials</li><li>Brute force algorithm (multiplying all terms together): ``\mathcal{O}(n * m) for polynomials with degrees n-1 and m-1</li></ul><pre><code class="language-julia hljs">using Polynomials
+
+p = Polynomial([1,0,3,4])
+q = Polynomial([1, 2, 3])
+
+p * q</code></pre>1 &#43; 2&#8729;x &#43; 6&#8729;x<sup>2</sup> &#43; 10&#8729;x<sup>3</sup> &#43; 17&#8729;x<sup>4</sup> &#43; 12&#8729;x<sup>5</sup><h2 id="Representation"><a class="docs-heading-anchor" href="#Representation">Representation</a><a id="Representation-1"></a><a class="docs-heading-anchor-permalink" href="#Representation" title="Permalink"></a></h2><ul><li>Coefficient representation vs. point-value representation</li><li>Multiplying polynomials in point-value representation is much easier:<ul><li>(fg)(x) = f(x)g(x)</li></ul></li></ul><h2 id="Discrete-Fourier-Transform"><a class="docs-heading-anchor" href="#Discrete-Fourier-Transform">Discrete Fourier Transform</a><a id="Discrete-Fourier-Transform-1"></a><a class="docs-heading-anchor-permalink" href="#Discrete-Fourier-Transform" title="Permalink"></a></h2><p>Convert from coefficient representation to point-value representation</p><ul><li><span>$\mathcal{O}(n \lg n)$</span> runtime</li><li>Evaluate a polynomial of degree n - 1 at n points to find its point-value representation</li><li>Choose these points carefully</li></ul><h2 id="Definitions"><a class="docs-heading-anchor" href="#Definitions">Definitions</a><a id="Definitions-1"></a><a class="docs-heading-anchor-permalink" href="#Definitions" title="Permalink"></a></h2><p>Let <span>$\mathbf{a} = [a_0, a_1, ..., a_{n-1}]$</span> be the sequence of coefficients of a polynomial <span>$P$</span> with degree <span>$n-1$</span> and <span>$\mathbf{w} = [w_0, w_1, ..., w_{n-1}]$</span>, <span>$w_j \in \mathbb{C}$</span>. Then the discrete Fourier transform of <span>$P$</span> gives the set of point-values <span>$[b_0, b_1, ..., b_{n-1}]$</span>, where each <span>$b_j$</span> is given by </p><p class="math-container">\[\begin{align} 
+b_j = P(w_j) = \sum_{k=0}^{n-1} a_k w_j^k 
+\end{align}\]</p><p>Written in matrix form, we have</p><p class="math-container">\[\begin{align}
+\begin{bmatrix}
+1 &amp; w_0 &amp; w_0^2 &amp; ... &amp; w_0^{n-1} \\
+1 &amp; w_1 &amp; w_1^2 &amp; ... &amp; w_1^{n-1} \\
+1 &amp; w_2 &amp; w_2^2 &amp; ... &amp; w_2^{n-1} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+1 &amp; w_{n-1} &amp; w_{n-1}^2 &amp; ... &amp; w_{n-1}^{n-1} \\
+\end{bmatrix}
+\begin{bmatrix}
+a_0 \\
+a_1 \\
+a_2 \\
+\vdots \\
+a_{n-1} \\
+\end{bmatrix}
+ = &amp; 
+\begin{bmatrix}
+b_0 \\
+b_1 \\
+b_2 \\
+\vdots \\
+b_{n-1} \\
+\end{bmatrix}
+\end{align}\]</p><p>The fast Fourier transform algorithm calculates each <span>$b_j$</span>. We will show that this algorithm runs in <span>$\mathcal{O} (n \log{} n)$</span> when <span>$n$</span> is a power of 2. To do so requires a selecting a special set of points <span>$\mathbf{w}$</span> called the <span>$N^{th}$</span> roots of unity.</p><h2 id="N{th}-Roots-of-Unity"><a class="docs-heading-anchor" href="#N{th}-Roots-of-Unity"><span>$N^{th}$</span> Roots of Unity</a><a id="N{th}-Roots-of-Unity-1"></a><a class="docs-heading-anchor-permalink" href="#N{th}-Roots-of-Unity" title="Permalink"></a></h2><h3 id="Definition"><a class="docs-heading-anchor" href="#Definition">Definition</a><a id="Definition-1"></a><a class="docs-heading-anchor-permalink" href="#Definition" title="Permalink"></a></h3><p>The <span>$N^{th}$</span> roots of unity are the set of complex numbers </p><p class="math-container">\[\begin{align}
+\{ \; e^{2\pi i \frac{j}{N}} \; \mid \; j = 0, 1, \dots, N-1 \}
+\end{align}\]</p><p>For example, the <span>$5^{th}$</span> roots of unity: <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/One5Root.svg/480px-One5Root.svg.png" alt="5th roots of unity"/></p><h3 id="Notation"><a class="docs-heading-anchor" href="#Notation">Notation</a><a id="Notation-1"></a><a class="docs-heading-anchor-permalink" href="#Notation" title="Permalink"></a></h3><p>When <span>$\mathbf{w}$</span> is the <span>$n^{th}$</span>roots of unity, we will refer to <span>$\mathbf{w}$</span> as <span>$w_n$</span>. The <span>$j^{th}$</span> element (previously <span>$w_j$</span>) is indicated using the array index notation, <span>$w_n[j]$</span>.</p><h3 id="Properties"><a class="docs-heading-anchor" href="#Properties">Properties</a><a id="Properties-1"></a><a class="docs-heading-anchor-permalink" href="#Properties" title="Permalink"></a></h3><p>Let <span>$w_n[j] = e^{2\pi i j/n}$</span>. Then <span>$w_n[j]$</span> is said to be an <span>$n^{th}$</span> root of unity and has the following properties:</p><ol><li><span>$w_n[j]^k = w_n[jk]$</span> </li><li><span>$w_n[j] w_n[k] = w_n[j + k]$</span></li><li><span>$w_n[j]^n = 1$</span></li><li>If <span>$n = 2^r$</span>, then <span>$w_n[2j] = w_{\frac{n}{2}}[j]$</span></li></ol><p><em>Proof of 4:</em></p><p class="math-container">\[\begin{align}
+w_n[2j] &amp; = (e^{2 \pi i (2j)/2^r}) \\
+&amp; = e^{2 \pi i j/2^{r-1}} \\
+&amp; = w_{\frac{n}{2}}[j] \\
+\end{align}\]</p><h2 id="Fast-Fourier-Transform"><a class="docs-heading-anchor" href="#Fast-Fourier-Transform">Fast Fourier Transform</a><a id="Fast-Fourier-Transform-1"></a><a class="docs-heading-anchor-permalink" href="#Fast-Fourier-Transform" title="Permalink"></a></h2><p>We are now ready to derive a recursive algorithm for the DFT. </p><p class="math-container">\[\begin{align}
+F(a, w_n[j]) = \sum_{k=0}^{n-1} a[k] w_n[j]^k
+\end{align}\]</p><p>If we split the righthand side into two summations, one over even indices of <span>$a$</span>, the other over the odd, we get</p><p class="math-container">\[\begin{align}
+\sum_{k=0}^{n-1} a[k] w_n[j]^k &amp; = \sum_{m=0}^{\frac{n}{2}-1} a[2m] w_n[j]^{2m} + \sum_{m=0}^{\frac{n}{2}-1} a[2m+1] w_n[j]^{2m+1}
+\end{align}\]</p><p>From properties 1. and 4., we can clearly see that the lefthand summation is <span>$F(a_{even}, w_{\frac{n}{2}}[j])$</span>. The righthand side requires a bit more manipulation:</p><p class="math-container">\[\begin{align}
+\sum_{m=0}^{\frac{n}{2}-1} a[2m + 1] w_n[j]^{2m+1} &amp; = \sum_{m=0}^{\frac{n}{2}-1} a[2m + 1] w_n[j(2m+1)]\\
+&amp; = \sum_{m=0}^{\frac{n}{2}-1} a[2m + 1] w_n[j2m] w_n[j] \\
+&amp; = w_n[j] \biggl( \sum_{m=0}^{\frac{n}{2}-1} a[2m + 1] w_n[2j]^m \biggr) \\
+&amp; = w_n[j] \cdot F(a_{odd}, w_{\frac{n}{2}}[j]) \\
+\end{align}\]</p><p>Therefore, our function <span>$F$</span> can be written as</p><p class="math-container">\[\begin{align}
+F(a, w_n[j]) &amp; = F(a_{even}, w_{\frac{n}{2}}[j]) + w_n[j] \cdot F(a_{odd}, w_{\frac{n}{2}}[j]) \\
+\end{align}\]</p><p>for <span>$j = (0, 1, \dots, n-1)$</span></p><p>This recurrence returns a single value for a particular <span>$j$</span>, however we can modify it to instead return the Fourier transform for all values of <span>$j$</span>, giving us</p><p class="math-container">\[\begin{align}
+F(a, w_n) &amp; = F(a_{even}, w_{\frac{n}{2}}) + w_n \cdot F(a_{odd}, w_{\frac{n}{2}}) \\
+\end{align}\]</p><p>Written in Julia, the algorithm is as follows:</p><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="PolynomialsFFT.fft" href="#PolynomialsFFT.fft"><code>PolynomialsFFT.fft</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">fft(n, x̄)</code></pre><p>Calculate the fast Fourier transform of n numbers in x̄.</p><p>(Note that n must be a power of 2 (n = 2ᵏ))</p><p>Returns:</p><ul><li>ȳ : A complex array of size n </li></ul></div><a class="docs-sourcelink" target="_blank" href="https://github.com/pnavaro/JuliaFFT/blob/b6021edd2dfc604ec741ef2469be3012a82765db/src/PolynomialsFFT.jl#L3-L13">source</a></section></article><pre><code class="language-julia hljs">import PolynomialsFFT:fft
+
+n = 4
+x̄ = [1, 1, 0., 2]
+ȳ = fft(n, x̄)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">4-element Vector{Complex}:
+                4.0 + 0.0im
+ 0.9999999999999997 - 1.0im
+               -2.0 + 3.6739403974420594e-16im
+ 1.0000000000000004 + 1.0im</code></pre><h2 id="Time-Complexity"><a class="docs-heading-anchor" href="#Time-Complexity">Time Complexity</a><a id="Time-Complexity-1"></a><a class="docs-heading-anchor-permalink" href="#Time-Complexity" title="Permalink"></a></h2><p>Let <span>$N = n$</span>, and <span>$T(N) = F(\mathbf{a}, w_n[j])$</span>,</p><p class="math-container">\[\begin{align}
+T(N) = 2 \cdot T(\frac{N}{2}) + N,
+\end{align}\]</p><p>where the <span>$+N$</span> comes from the loop after the recursive step.</p><p>This algorithm runs in <span>$\mathcal{O}(N \lg N)$</span> when <span>$N$</span> is a power of 2.</p><p><em>Proof:</em></p><p class="math-container">\[\begin{align}
+T(N) &amp; = 2 \cdot T(\frac{N}{2}) + N \\
+\end{align}\]</p><p>Let <span>$N = 2^k$</span>, and <span>$t_k = T(2^k)$</span></p><p class="math-container">\[\begin{align}
+t_k &amp; = 2t_{k-1} + 2^k \\
+t_k - 2t_{k-1} &amp; = 2^k \\
+\end{align}\]</p><p>We can use the characteristic equation to solve this inhomogeneous system.</p><p class="math-container">\[\begin{align}
+(x - 2)^2 &amp; = 0 \\
+\end{align}\]</p><p>So we end up with</p><p class="math-container">\[\begin{align}
+t_k &amp; = c_1 2^k + c_2 k 2^k; k = \lg N\\
+T(N) &amp; = c_1 N + c_2 N \lg N \\
+T(N) &amp; = \mathcal{O}(N \lg N) \\
+\end{align}\]</p><h2 id="Example"><a class="docs-heading-anchor" href="#Example">Example</a><a id="Example-1"></a><a class="docs-heading-anchor-permalink" href="#Example" title="Permalink"></a></h2><p>Say you want to perform the following multiplication:</p><p class="math-container">\[\begin{align}
+(1 + x)(1 + x + x^2).
+\end{align}\]</p><p>We can use the FFT algorithm to find the point-value representation of each polynomial, then multiply those two together:</p><p>Calculating the FFT of each,</p><p class="math-container">\[\begin{align}
+FFT(1 + x) &amp; = [2, 1+i, 0, 1-i] \\
+FFT(1 + x + x^2) &amp; = [3, i, 1, -i], \\
+\end{align}\]</p><p>which leads to the point-value representation of their product: <span>$[6, -1 + i, 0, -1-i]$</span>.</p><pre><code class="language-julia hljs">n = 4
+x̄₁ = fft(4, [1,1,0,0])</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">4-element Vector{Complex}:
+                2.0 + 0.0im
+                1.0 + 1.0im
+                0.0 + 1.2246467991473532e-16im
+ 0.9999999999999998 - 1.0im</code></pre><pre><code class="language-julia hljs">ȳ₁ = fft(4, [1,1,1,0])</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">4-element Vector{Complex}:
+                     3.0 + 0.0im
+   6.123233995736766e-17 + 1.0000000000000002im
+                     1.0 + 1.2246467991473532e-16im
+ -1.8369701987210297e-16 - 0.9999999999999999im</code></pre><pre><code class="language-julia hljs">x̄₁ .* ȳ₁</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">4-element Vector{ComplexF64}:
+                     6.0 + 0.0im
+     -1.0000000000000002 + 1.0000000000000002im
+ -1.4997597826618576e-32 + 1.2246467991473532e-16im
+                    -1.0 - 0.9999999999999994im</code></pre><article class="docstring"><header><a class="docstring-article-toggle-button fa-solid fa-chevron-down" href="javascript:;" title="Collapse docstring"></a><a class="docstring-binding" id="PolynomialsFFT.ifft" href="#PolynomialsFFT.ifft"><code>PolynomialsFFT.ifft</code></a> — <span class="docstring-category">Function</span></header><section><div><pre><code class="language-julia hljs">ifft(n, y)</code></pre><p>Compute the inverse Fourier transform</p></div><a class="docs-sourcelink" target="_blank" href="https://github.com/pnavaro/JuliaFFT/blob/b6021edd2dfc604ec741ef2469be3012a82765db/src/PolynomialsFFT.jl#L39-L43">source</a></section></article><pre><code class="language-julia hljs">import PolynomialsFFT: ifft
+
+v = ifft(4, [6,−1+1im,0.,−1−1im])</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">4-element Vector{ComplexF64}:
+ 1.0 + 0.0im
+ 2.0 - 2.4894981252573997e-17im
+ 2.0 + 6.123233995736766e-17im
+ 1.0 - 3.633735870479366e-17im</code></pre><pre><code class="language-julia hljs">Polynomial([1,1,0,0]) * Polynomial([1,1,1,0])</code></pre>1 &#43; 2&#8729;x &#43; 2&#8729;x<sup>2</sup> &#43; x<sup>3</sup><pre><code class="language-julia hljs">Polynomial(Int.(round.(v)))</code></pre>1 &#43; 2&#8729;x &#43; 2&#8729;x<sup>2</sup> &#43; x<sup>3</sup></article><nav class="docs-footer"><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option><option value="auto">Automatic (OS)</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.2.1 on <span class="colophon-date" title="Sunday 24 December 2023 21:05">Sunday 24 December 2023</span>. Using Julia version 1.9.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
