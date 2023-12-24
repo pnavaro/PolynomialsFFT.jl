@@ -5,7 +5,7 @@ Calculate the fast Fourier transform of n numbers in x̄.
 Returns:
 ȳ - A complex array of size n 
 """
-function FFT(n::Integer, x̄::Array{<:Number})
+function fft(n::Integer, x̄::Array{<:Number})
     # Julia is 1-indexed
     if n == 1
         return [x̄[1]]

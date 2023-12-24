@@ -1,15 +1,12 @@
 using Documenter
-using FFTPolynomialProduct
+using PolynomialsFFT
 
 makedocs(
-    sitename = "FFTPolynomialProduct",
+    sitename = "PolynomialsFFT",
     format = Documenter.HTML(),
-    modules = [FFTPolynomialProduct]
+    modules = [PolynomialsFFT]
 )
 
-# Documenter can also automatically deploy documentation to gh-pages.
-# See "Hosting Documentation" and deploydocs() in the Documenter manual
-# for more information.
-#=deploydocs(
-    repo = "<repository url>"
-)=#
+deploydocs(
+    repo = "github.com/pnavaro/JuliaFFT"
+)

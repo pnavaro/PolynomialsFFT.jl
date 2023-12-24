@@ -1,6 +1,8 @@
-name = "FFTPolynomialProduct"
+name = "PolynomialsFFT"
 uuid = "ea2507fa-e483-4fb4-8936-3e802d2aaf4a"
 authors = ["Pierre Navaro <pierre.navaro@math.cnrs.fr>"]
 version = "0.1.0"
 
 [deps]
+Polynomials = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
