@@ -1,15 +1,34 @@
 using Test
+using Polynomials
 using PolynomialsFFT
 
-@testset "fft" begin
+@testset "qwen" begin
 
     n = 4
-    x = [1, 1, 0, 2]
-    y = PolynomialsFFT.fft(n, x)
+    x = [1.0, 1, 0, 2]
+    y = [4.0, - 1.0, -2.0, 1.0]
 
-    @test y ≈ [4.0, 1. - 1.0im, -2.0, 1.0 + 1.0im]
-    v = PolynomialsFFT.ifft(4, y)
-    @test v ≈ x
+    ref = Polynomial(x) * Polynomial(y)
+
+    res = multiply_polynomials(x, y)
+
+    @test ref == Polynomial(res)
+
+
+end
+
+@testset "deepseek" begin
+
+    n = 4
+    x = [1.0, 1, 0, 2]
+    y = [4.0, - 1.0, -2.0, 1.0]
+
+    ref = Polynomial(x) * Polynomial(y)
+
+    res = multiply_polynomials_deepseek(x, y)
+
+    @test ref == Polynomial(res)
+
 
 end
 
